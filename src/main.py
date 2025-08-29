@@ -73,10 +73,13 @@ def main():
 
             elif choice == "4":
                 path = input("Введите адрес папки: ")
-                if set_download_path(path):
-                    print("Успешно установлена папка.")
-                else:
-                    print("Папка не найдена.")
+                try:
+                    if set_download_path(path):
+                        print("Успешно установлена папка.")
+                    else:
+                        print("Папка не найдена.")
+                except Exception as e:
+                    print(f"❌ Ошибка: {e}")
 
             elif choice == "0":
                 print("👋 Выход")
