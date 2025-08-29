@@ -1,3 +1,4 @@
+import os
 import re
 import subprocess
 from tqdm import tqdm
@@ -13,7 +14,9 @@ def download_video_from_static_video_source(src: StaticVideoSource, output_path:
     if src.is_expired():
         raise RuntimeError("Срок действия ссылки истек")
 
-    filename = output_path + f'/{src.title}.{src.file_type}'
+    sanitized = re.sub(r'[\\/:*?"<>|]', '_', src.title)
+
+    filename = os.path.join(output_path, sanitized)[:max(1, 260 - len(output_path) - len(src.file_type) - 2)] + f".{src.file_type}"
 
     # Узнаём длительность ролика
     probe = subprocess.run(
