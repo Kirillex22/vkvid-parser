@@ -3,6 +3,17 @@ from contextlib import contextmanager
 
 from playwright.sync_api import sync_playwright
 
+DOWNLOAD_PATH = None
+
+with open("data/download_path", 'r', encoding='utf-8') as f:
+    path = f.read()
+    if len(path) == 0 or not os.path.exists(path):
+        DOWNLOAD_PATH = os.getcwd()
+
+    else:
+        DOWNLOAD_PATH = path
+
+
 PROFILE_PATH = f"{os.getcwd()}\\data\\vk_playwright_profile"
 DATA_DIR = "data"
 MAPPING_FILE = os.path.join(DATA_DIR, "mapping.json")
@@ -19,3 +30,15 @@ def browser_provider(gui: bool):
             yield browser
         finally:
             browser.close()
+
+
+def set_download_path(path: str) -> bool:
+    global DOWNLOAD_PATH
+    if os.path.exists(path):
+        DOWNLOAD_PATH = path
+        with open("data/download_path", 'w', encoding='utf-8') as f:
+            f.write(path)
+
+        return True
+
+    return False

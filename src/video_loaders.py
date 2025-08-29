@@ -3,11 +3,12 @@ import re
 import subprocess
 from tqdm import tqdm
 
+from src import DOWNLOAD_PATH
 from src.models import StaticVideoSource
 
 
 
-def download_video_from_static_video_source(src: StaticVideoSource, output_path: str) -> None:
+def download_video_from_static_video_source(src: StaticVideoSource) -> None:
     """
     Скачивает видео с помощью ffmpeg и отображает прогресс через tqdm.
     """
@@ -16,7 +17,7 @@ def download_video_from_static_video_source(src: StaticVideoSource, output_path:
 
     sanitized = re.sub(r'[\\/:*?"<>|]', '_', src.title)
 
-    filename = os.path.join(output_path, sanitized)[:max(1, 260 - len(output_path) - len(src.file_type) - 2)] + f".{src.file_type}"
+    filename = os.path.join(DOWNLOAD_PATH, sanitized)[:max(1, 260 - len(DOWNLOAD_PATH) - len(src.file_type) - 2)] + f".{src.file_type}"
 
     # Узнаём длительность ролика
     probe = subprocess.run(
