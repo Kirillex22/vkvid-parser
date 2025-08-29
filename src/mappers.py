@@ -1,3 +1,5 @@
+from typing import List
+
 from src.models import StaticVideoSource
 
 
@@ -10,7 +12,14 @@ def map_vk_video_link_to_static_video_source(title: str, file_type: str, link: s
         quality = None
         file_type = file_type
 
-    expires = int(link.split('&')[2].replace("expires=", ""))/1000
+    args_splitted: List[str] = link.split('&')[1:]
+
+    expires = None
+
+    for arg in args_splitted:
+        if "expires=" in arg:
+            expires = int(arg.replace("expires=", ""))/1000
+            break
 
     return StaticVideoSource(
         title = title,
