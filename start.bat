@@ -20,4 +20,3 @@ python -m src.main
 
 :: Деактивируем виртуальное окружение
 deactivate
-pause

@@ -3,20 +3,19 @@ from contextlib import contextmanager
 
 from playwright.sync_api import sync_playwright
 
+DATA_DIR = os.path.join(os.getcwd(), "src", "data")
+PROFILE_PATH = os.path.join(os.getcwd(), DATA_DIR, "vk_playwright_profile")
+MAPPING_FILE = os.path.join(DATA_DIR, "mapping.json")
 DOWNLOAD_PATH = None
 
-with open("data/download_path", 'r', encoding='utf-8') as f:
+with open(os.path.join(DATA_DIR, "download_path"), 'r', encoding='utf-8') as f:
     path = f.read()
-    if len(path) == 0 or not os.path.exists(path):
+    if len(path) <= 0 or not os.path.exists(path):
         DOWNLOAD_PATH = os.getcwd()
 
     else:
         DOWNLOAD_PATH = path
 
-
-PROFILE_PATH = f"{os.getcwd()}\\data\\vk_playwright_profile"
-DATA_DIR = "data"
-MAPPING_FILE = os.path.join(DATA_DIR, "mapping.json")
 
 @contextmanager
 def browser_provider(gui: bool):
