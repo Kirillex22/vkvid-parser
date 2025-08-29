@@ -35,7 +35,7 @@ def set_download_path(path: str) -> bool:
     global DOWNLOAD_PATH
     if os.path.exists(path):
         DOWNLOAD_PATH = path
-        with open("data/download_path", 'w', encoding='utf-8') as f:
+        with open(os.path.join(DATA_DIR, "download_path"), 'w', encoding='utf-8') as f:
             f.write(path)
 
         return True

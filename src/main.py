@@ -1,8 +1,9 @@
 import os
 import json
+import src as config
 from typing import Dict
 
-from src import MAPPING_FILE, browser_provider, PROFILE_PATH, DOWNLOAD_PATH, set_download_path
+from src import MAPPING_FILE, browser_provider, PROFILE_PATH, set_download_path
 from src.mappers import map_vk_video_link_to_static_video_source
 from src.parsers import get_src_videos_from_vkvideo_page
 from src.scripts import vk_login
@@ -21,7 +22,7 @@ def main():
             input('Нажмите ENTER, чтобы продолжить...')
             os.system('cls' if os.name == 'nt' else 'clear')
 
-            print(f"\n=== VK Video Parser === (Папка для сохранения: {DOWNLOAD_PATH})")
+            print(f"\n=== VK Video Parser === (Папка для сохранения: {config.DOWNLOAD_PATH})")
             print("1. Вставить ссылку и скачать видео")
             print("2. Посмотреть все дампнутые ролики")
             print("3. Скачать ролик по ID")
@@ -73,10 +74,13 @@ def main():
 
             elif choice == "4":
                 path = input("Введите адрес папки: ")
-                if set_download_path(path):
-                    print("Успешно установлена папка.")
-                else:
-                    print("Папка не найдена.")
+                try:
+                    if set_download_path(path):
+                        print("Успешно установлена папка.")
+                    else:
+                        print("Папка не найдена.")
+                except Exception as e:
+                    print(f"❌ Ошибка: {e}")
 
             elif choice == "0":
                 print("👋 Выход")
