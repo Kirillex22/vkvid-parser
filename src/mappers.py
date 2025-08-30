@@ -12,7 +12,7 @@ def map_vk_video_link_to_static_video_source(title: str, file_type: str, link: s
         quality = None
         file_type = file_type
 
-    args_splitted: List[str] = link.split('&')[1:]
+    args_splitted: List[str] = link.split('&')
 
     expires = None
 

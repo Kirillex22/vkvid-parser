@@ -16,3 +16,7 @@ class StaticVideoSource:
             return False
 
         return True
+
+    def __repr__(self) -> str:
+        return f"{self.title}\nquality: {self.quality}\nvideo_url: {self.link}\nexpired: {self.is_expired()}"
+
