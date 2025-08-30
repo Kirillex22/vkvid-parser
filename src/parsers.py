@@ -1,6 +1,5 @@
-import json
+import src
 from typing import Tuple, Dict
-
 
 def get_src_videos_from_vkvideo_page(browser, page_url: str) -> Tuple[str, Dict[str, str]]:
     page = browser.new_page()
@@ -19,10 +18,7 @@ def get_src_videos_from_vkvideo_page(browser, page_url: str) -> Tuple[str, Dict[
     page.on("response", handle_response)
 
     page.goto(page_url)
-    page.wait_for_timeout(4000)
-
-    with open("data/test.json", 'w', encoding='utf-8') as f:
-        f.write(json.dumps(responses_data, ensure_ascii=False))
+    page.wait_for_timeout(src.PAGE_LOADING_TIMEOUT_MS)
 
     if responses_data:
         title = page.locator('[class="vkitTextClamp__root--8Ttiw vkitgetColorClass__colorTextPrimary--AX4Wt vkuiTitle__sizeYCompact vkuiTitle__level3 vkuiTypography__host vkuiTypography__normalize vkuiRootComponent__host"]').text_content(timeout=10000)
