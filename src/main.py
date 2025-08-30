@@ -1,9 +1,7 @@
 import os
-import json
 import src as config
-from typing import Dict
 
-from src import MAPPING_FILE, browser_provider, PROFILE_PATH, set_download_path
+from src import browser_provider, PROFILE_PATH, set_download_path
 from src.mappers import map_vk_video_link_to_static_video_source
 from src.parsers import get_src_videos_from_vkvideo_page
 from src.scripts import vk_login
@@ -57,14 +55,13 @@ def main():
 
 
             elif choice == "2":
-                with open(MAPPING_FILE, "r", encoding="utf-8") as f:
-                    mapping: Dict[str, str] = json.load(f)
-                if not mapping:
+                srcs = load_static_video_source()
+                if not srcs:
                     print("Пока ничего не дампнуто.")
                 else:
                     print("\nДампнутые ролики:")
-                    for _id, title in mapping.items():
-                        print(f"{_id} → {title}")
+                    for _id, src in srcs:
+                        print(f"ID: {_id}\n{src}")
 
             elif choice == "3":
                 vid = input("Введите ID ролика: ").strip()
