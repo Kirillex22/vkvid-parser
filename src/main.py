@@ -1,9 +1,7 @@
 import os
-import json
 import src as config
-from typing import Dict
 
-from src import MAPPING_FILE, browser_provider, PROFILE_PATH, set_download_path
+from src import browser_provider, PROFILE_PATH, set_download_path
 from src.mappers import map_vk_video_link_to_static_video_source
 from src.parsers import get_src_videos_from_vkvideo_page
 from src.scripts import vk_login
